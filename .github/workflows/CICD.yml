@@ -1,12 +1,11 @@
 name: CI/CD Demo pipeline logbook1
 
-# define when the workflow is triggered on a push to feature branch, a PR to main or manually.
+# define when the workflow is triggered on a push to main branch, a PR to main or manually.
 
 on:
   push:
     branches:
       - main
-      - feature
   pull_request:
     branches:
       - main
