@@ -9,6 +9,7 @@ on:
       - feature
     pull_request:
       - main
+      - feature
     workflow_dispatch:
 
 # simulations of jobs per environment
