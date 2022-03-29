@@ -7,10 +7,10 @@ on:
     branches:
       - main
       - feature
-    pull_request:
-      branches:
-        - main
-    workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
 
 # simulations of jobs per environment
 
