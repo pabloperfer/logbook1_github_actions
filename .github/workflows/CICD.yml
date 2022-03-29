@@ -8,8 +8,8 @@ on:
       - main
       - feature
     pull_request:
-      - main
-      - feature
+      branches:
+        - main
     workflow_dispatch:
 
 # simulations of jobs per environment
