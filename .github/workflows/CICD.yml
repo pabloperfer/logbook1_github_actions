@@ -15,8 +15,8 @@ on:
 # simulations of jobs per environment
 
 jobs:
-  Build:
-    runs-on: ubuntu-latest
+  Build:                                            # whenever we push to either feature or main branch compilation is triggered
+    runs-on: ubuntu-latest                       
     steps:
       - uses: actions/checkout@v3
       - name: Compile
@@ -25,8 +25,8 @@ jobs:
 # deployment to development environment
 
   DeployDev:
-    name: Deploy to development
-    if: github.event_name == 'pull_request'   #will deploy when pr created
+    name: Deploy to development2
+    if: github.event_name == 'pull_request'   #will deploy to development environment only when a pull request to main is created as specified in "on"
     needs: [Build]
     runs-on: ubuntu-latest
     environment: 
@@ -36,9 +36,9 @@ jobs:
         run: echo code is being deployed to dev
 
 
-  # deployment to staging environment
-  DeployStaging:
-    name : Deploy to staging environment
+  # deployment to staging environment when a push in main (a merge is a push) occurs
+  DeployStaging:                                   
+    name : Deploy to staging environment              
     if: github.event.ref == 'refs/heads/main' 
     needs: [Build]
     runs-on: ubuntu-latest
