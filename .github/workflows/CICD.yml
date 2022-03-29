@@ -1,1 +1,60 @@
+name: CI/CD Demo pipeline logbook1
 
+# define when the workflow is triggered on a push to feature branch, a PR to main or manually.
+
+on:
+  push:
+    branches:
+      - main
+      - feature
+  pull_request:
+      - main
+  workflow_dispatch:
+
+# simulations of jobs per environment
+
+jobs:
+  Build:
+    runs-on: ubuntu_latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Compile
+        run : echo compiling ...
+
+# deployment to development environment
+
+  DeployDev:
+    name: Deploy to development
+    if: github.event_name == 'pull_request'   #will deploy when pr created
+    needs: [Build]
+    runs-on: ubuntu_latest
+    environment: 
+      name: Development
+    steps:
+      - name: Deploy
+        run: echo code is being deployed to dev
+
+
+  # deployment to staging environment
+  DeployStaging:
+    name : Deploy to staging environment
+    if: github.event.ref == 'refs/heads/main' 
+    needs: [Build]
+    runs-on: ubuntu_latest
+    environment:
+      name: Staging
+    steps:
+      - name: Deploy
+        run: echo code is being deployed to Staging
+
+  # deploying to production if approved manually
+  DeployProduction:
+    name: Deploy to production
+    if: github.event.ref == 'refs/heads/main'  # it will deploy only when code is pushed to main
+    needs: [DeployStaging]
+    runs-on: ubuntu_latest
+    environment:
+      name: Production
+    steps:
+      - name: Deploy
+        run: echo code deployed to Production
